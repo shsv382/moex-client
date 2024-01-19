@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import styles from './BasicTable.module.scss';
+import { PopupBody } from '../PopupBody';
 
 export default function BasicTable({ data }: { data: any[] }) {
   return (
@@ -18,7 +19,19 @@ export default function BasicTable({ data }: { data: any[] }) {
             <TableCell>Название</TableCell>
             <TableCell align="right">Вес в индексе</TableCell>
             <TableCell align="right">Цена</TableCell>
-            <TableCell align="right">Сколько акций должно быть в портфеле</TableCell>
+            <TableCell align="right">Объем лота</TableCell>
+            <TableCell align="right" className={styles.withPopup}>
+              Таргет акций
+              <PopupBody className={styles.popup}>Сколько акций должно быть в портфеле</PopupBody>
+            </TableCell>
+            <TableCell align="right" className={styles.withPopup}>
+              Таргет лотов
+              <PopupBody className={styles.popup}>Сколько лотов должно быть в портфеле</PopupBody>
+            </TableCell>
+            <TableCell align="right" className={styles.withPopup}>
+              Таргет акций (факт)
+              <PopupBody className={styles.popup}>Сколько акций должно быть в портфеле (по факту)</PopupBody>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -33,7 +46,10 @@ export default function BasicTable({ data }: { data: any[] }) {
 				<TableCell>{row.shortnames}</TableCell>
 				<TableCell align="right">{row.weight} %</TableCell>
 				<TableCell align="right">{row.marketPrice} &#x20bd;</TableCell>
+				<TableCell align="right">{row.lotSize} шт.</TableCell>
 				<TableCell align="right">{row.countTarget} шт.</TableCell>
+				<TableCell align="right">{row.lotsTarget} шт.</TableCell>
+				<TableCell align="right">{row.finalTarget} шт.</TableCell>
             </TableRow>
           ))}
         </TableBody>

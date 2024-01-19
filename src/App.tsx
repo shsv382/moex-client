@@ -15,7 +15,10 @@ interface Stock {
   weight: number,
   tradingsession: number,
   marketPrice: number,
-  countTarget: number
+  countTarget: number,
+  lotsTarget: number,
+  finalTarget: number,
+  lotSize: number
 }
 
 function App() {
@@ -30,7 +33,8 @@ function App() {
         secid: string,
         weight: number,
         tradingsession: number,
-        marketPrice: number
+        marketPrice: number,
+        lotSize: number
     ) {
         return { 
         indexid,
@@ -40,7 +44,8 @@ function App() {
         secid,
         weight,
         tradingsession,
-        marketPrice 
+        marketPrice,
+        lotSize 
         };
     }
 
@@ -52,14 +57,6 @@ function App() {
             const stockPromises = data.analytics.data.map(async (item: any[]) => {
                 let response = await fetch(STOCK_URL(item[4]));
                 let data = await response.json();
-                let j=0;
-                let marketPrice = 0;
-                while (j < data.marketdata.data.length) {
-                    if(data.marketdata.data[j][1] === 'TQBR') {
-                        marketPrice = data.marketdata.data[j][36]
-                    }
-                    j++
-                }
                 return createData(
                     item[0], 
                     item[1], 
@@ -68,22 +65,23 @@ function App() {
                     item[4], 
                     item[5], 
                     item[6],
-                    marketPrice 
+                    data.marketdata.data[0][36],
+                    data.securities.data[0][4]
                 )
             });
             const stocks = await Promise.all(stockPromises);
             return stocks;
         }
         
-        if (imoex_cached) {
-            setImoex(imoex_cached);
-        } else {
+        // if (imoex_cached) {
+        //     setImoex(imoex_cached);
+        // } else {
             fetchIMOEXData()
                 .then(stocks => {
                     setImoex(stocks) 
                     LocalStorage.setTemporaryItem("imoex", stocks, 1);
                 })
-        }
+        // }
     }, [])
 
     return (
@@ -93,6 +91,8 @@ function App() {
                 <BasicTable data={
                     imoex.sort((s1, s2) => s2.weight - s1.weight).map(stock => {
                         stock.countTarget = Math.floor((amount / 100 * stock.weight) / stock.marketPrice)
+                        stock.lotsTarget = Math.floor(stock.countTarget / stock.lotSize)
+                        stock.finalTarget = stock.lotsTarget * stock.lotSize
                         return stock
                     })
                 } />

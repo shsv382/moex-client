@@ -2,3 +2,18 @@
     font-weight: 800;
     background-color: rgba(lavender, 0.5);
 }
+
+.withPopup {
+    .popup {
+        display: none;
+    }
+    &:hover {
+        cursor: context-menu;
+        .popup {
+            display: flex;
+            position: fixed;
+            max-width: 180px;
+            text-align: left;
+        }
+    }
+}
