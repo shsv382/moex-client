@@ -98,7 +98,7 @@ function App() {
         if (!portfolio || Object.keys(portfolio).length <= 1) {
             imoex.forEach(stock => {
                 portfolio[stock.ticker] = stock.weight;
-                portfolio.total += Math.round(stock.weight);
+                portfolio.total += stock.weight;
                 myMoex.push({...stock, includedToPortfolio: true});
             })
         } else {
@@ -118,7 +118,10 @@ function App() {
     const addToPortfolio = (ticker: string): void => {
         const _portfolio = { ...portfolio };
         const elem = imoex.find(item => item.ticker === ticker);
-        if (elem) _portfolio[ticker] = elem.weight;
+        if (elem) {
+            _portfolio[ticker] = elem.weight;
+            _portfolio.total += elem.weight;
+        }
         setPortfolio(_portfolio);
         LS.setItem("portfolio", _portfolio)
         setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, includedToPortfolio: true} : stock))
@@ -126,6 +129,7 @@ function App() {
 
     const removeFromPortfolio = (ticker: string): void => {
         const _portfolio = { ...portfolio };
+        _portfolio.total -= _portfolio[ticker];
         delete _portfolio[ticker];
         setPortfolio(_portfolio);
         LS.setItem("portfolio", _portfolio)
@@ -138,6 +142,10 @@ function App() {
         <div className={styles.app}>
             <Container>
                 <TextField id="capitalSize" label="Размер капитала" variant="standard" type="number" onChange={setCapitalAmount} defaultValue={amount} />
+                <div>Total portfolio: {portfolio.total} %</div>
+                <div>Total index: {
+                imoex.reduce((total, item) => total + item.weight, 0)
+                } %</div>
                 <ImoexTable data={
                     myMoex.sort((s1, s2) => s2.weight - s1.weight).map(stock => {
                         stock.countTarget = Math.floor((amount / 100 * stock.weight) / stock.marketPrice)
