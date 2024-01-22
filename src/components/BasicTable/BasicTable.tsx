@@ -17,20 +17,16 @@ export default function BasicTable({ data }: { data: any[] }) {
           <TableRow>
             <TableCell>Тикер</TableCell>
             <TableCell>Название</TableCell>
+            <TableCell align="center" className={styles.withPopup}>
+              Таргет (факт)
+              <PopupBody className={styles.popup}>Сколько акций/лотов должно быть в портфеле</PopupBody>
+            </TableCell>
             <TableCell align="right">Вес в индексе</TableCell>
             <TableCell align="right">Цена</TableCell>
             <TableCell align="right">Объем лота</TableCell>
             <TableCell align="right" className={styles.withPopup}>
               Таргет акций
               <PopupBody className={styles.popup}>Сколько акций должно быть в портфеле</PopupBody>
-            </TableCell>
-            <TableCell align="right" className={styles.withPopup}>
-              Таргет лотов
-              <PopupBody className={styles.popup}>Сколько лотов должно быть в портфеле</PopupBody>
-            </TableCell>
-            <TableCell align="right" className={styles.withPopup}>
-              Таргет акций (факт)
-              <PopupBody className={styles.popup}>Сколько акций должно быть в портфеле (по факту)</PopupBody>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -44,12 +40,11 @@ export default function BasicTable({ data }: { data: any[] }) {
 					{row.ticker}
 				</TableCell>
 				<TableCell>{row.shortnames}</TableCell>
+				<TableCell align="center">{row.finalTarget} шт. / {row.lotsTarget} лт.</TableCell>
 				<TableCell align="right">{row.weight} %</TableCell>
 				<TableCell align="right">{row.marketPrice} &#x20bd;</TableCell>
 				<TableCell align="right">{row.lotSize} шт.</TableCell>
 				<TableCell align="right">{row.countTarget} шт.</TableCell>
-				<TableCell align="right">{row.lotsTarget} шт.</TableCell>
-				<TableCell align="right">{row.finalTarget} шт.</TableCell>
             </TableRow>
           ))}
         </TableBody>

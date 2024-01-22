@@ -3,10 +3,10 @@ import BasicTable from './components/BasicTable/BasicTable';
 import { Container } from './components/Container';
 import styles from './App.module.scss';
 import { IMOEX_URL, STOCK_URL } from './constants';
-import { LocalStorage } from './helpers/localStorage';
+import { LocalStorage as LS } from './helpers/localStorage';
 import TextField from '@mui/material/TextField';
 
-interface Stock {
+interface Stock<T> {
   indexid: string,
   tradeDate: string,
   ticker: string,
@@ -18,12 +18,20 @@ interface Stock {
   countTarget: number,
   lotsTarget: number,
   finalTarget: number,
-  lotSize: number
+  lotSize: number,
+  includedToPortfolio?: T
+}
+
+interface PortfolioStocks {
+    [ticker: string]: number,
+    total: number
 }
 
 function App() {
-    const [imoex, setImoex] = useState<Stock[]>([]);
-    const [amount, setAmount] = useState<number>(100000);
+    const [imoex, setImoex] = useState<Stock<null>[]>([]);
+    const [myMoex, setMyMoex] = useState<Stock<boolean>[]>([]);
+    const [amount, setAmount] = useState<number>(250000);
+    const [portfolio, setPortfolio] = useState<PortfolioStocks>({total: 0});
 
     function createData(
         indexid: string,
@@ -50,7 +58,7 @@ function App() {
     }
 
     useEffect(() => {
-        const imoex_cached = LocalStorage.getTemporaryItem("imoex");
+        const imoex_cached = LS.getTemporaryItem("imoex");
         async function fetchIMOEXData() {
             const response = await fetch(IMOEX_URL());
             const data = await response.json();
@@ -65,7 +73,7 @@ function App() {
                     item[4], 
                     item[5], 
                     item[6],
-                    data.marketdata.data[0][36],
+                    data.marketdata.data[0][24],
                     data.securities.data[0][4]
                 )
             });
@@ -73,21 +81,46 @@ function App() {
             return stocks;
         }
         
-        // if (imoex_cached) {
-        //     setImoex(imoex_cached);
-        // } else {
+        if (imoex_cached) {
+            setImoex(imoex_cached);
+        } else {
             fetchIMOEXData()
                 .then(stocks => {
                     setImoex(stocks) 
-                    LocalStorage.setTemporaryItem("imoex", stocks, 1);
+                    LS.setTemporaryItem("imoex", stocks, 1);
                 })
-        // }
+        }
     }, [])
+
+    useEffect(() => {
+        let portfolio = LS.getItem("portfolio") || {total: 0};
+        let myMoex: Stock<boolean>[] = [];
+        if (!portfolio || Object.keys(portfolio).length <= 1) {
+            imoex.forEach(stock => {
+                portfolio[stock.ticker] = stock.weight;
+                portfolio.total += Math.round(stock.weight);
+                myMoex.push({...stock, includedToPortfolio: true});
+            })
+        } else {
+            imoex.forEach(stock => {
+                myMoex.push({...stock, includedToPortfolio: !!portfolio[stock.ticker]});
+            })
+        }
+        setPortfolio(portfolio);
+        LS.setItem("portfolio", portfolio)
+        setMyMoex(myMoex);
+    }, [imoex])
+
+    // const removeFromPortfolio = (stock: Stock<boolean>) => {
+
+    // }
+
+    const setCapitalAmount = (e: React.ChangeEvent<HTMLInputElement>) => setAmount(Number(e.target.value))
 
     return (
         <div className={styles.app}>
             <Container>
-                <TextField id="capitalSize" label="Размер капитала" variant="standard" type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount(Number(e.target.value))} />
+                <TextField id="capitalSize" label="Размер капитала" variant="standard" type="number" onChange={setCapitalAmount} defaultValue={amount} />
                 <BasicTable data={
                     imoex.sort((s1, s2) => s2.weight - s1.weight).map(stock => {
                         stock.countTarget = Math.floor((amount / 100 * stock.weight) / stock.marketPrice)
