@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BasicTable from './components/BasicTable/BasicTable';
+import { ImoexTable } from './components/ImoexTable/ImoexTable';
 import { Container } from './components/Container';
 import styles from './App.module.scss';
 import { IMOEX_URL, STOCK_URL } from './constants';
@@ -103,7 +103,11 @@ function App() {
             })
         } else {
             imoex.forEach(stock => {
-                myMoex.push({...stock, includedToPortfolio: !!portfolio[stock.ticker]});
+                if (portfolio[stock.ticker]) {
+                    myMoex.push({...stock, includedToPortfolio: true});
+                } else {
+                    myMoex.push({...stock, includedToPortfolio: false});
+                }
             })
         }
         setPortfolio(portfolio);
@@ -111,9 +115,22 @@ function App() {
         setMyMoex(myMoex);
     }, [imoex])
 
-    // const removeFromPortfolio = (stock: Stock<boolean>) => {
+    const addToPortfolio = (ticker: string): void => {
+        const _portfolio = { ...portfolio };
+        const elem = imoex.find(item => item.ticker === ticker);
+        if (elem) _portfolio[ticker] = elem.weight;
+        setPortfolio(_portfolio);
+        LS.setItem("portfolio", _portfolio)
+        setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, includedToPortfolio: true} : stock))
+    }
 
-    // }
+    const removeFromPortfolio = (ticker: string): void => {
+        const _portfolio = { ...portfolio };
+        delete _portfolio[ticker];
+        setPortfolio(_portfolio);
+        LS.setItem("portfolio", _portfolio)
+        setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, includedToPortfolio: false} : stock))
+    }
 
     const setCapitalAmount = (e: React.ChangeEvent<HTMLInputElement>) => setAmount(Number(e.target.value))
 
@@ -121,14 +138,15 @@ function App() {
         <div className={styles.app}>
             <Container>
                 <TextField id="capitalSize" label="Размер капитала" variant="standard" type="number" onChange={setCapitalAmount} defaultValue={amount} />
-                <BasicTable data={
-                    imoex.sort((s1, s2) => s2.weight - s1.weight).map(stock => {
+                <ImoexTable data={
+                    myMoex.sort((s1, s2) => s2.weight - s1.weight).map(stock => {
                         stock.countTarget = Math.floor((amount / 100 * stock.weight) / stock.marketPrice)
                         stock.lotsTarget = Math.floor(stock.countTarget / stock.lotSize)
                         stock.finalTarget = stock.lotsTarget * stock.lotSize
                         return stock
                     })
-                } />
+                } removeFromPortfolio={removeFromPortfolio} 
+                addToPortfolio={addToPortfolio} />
             </Container>
         </div>
     );
