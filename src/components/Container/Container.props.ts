@@ -1,3 +1,4 @@
 export interface ContainerProps {
-    children?: React.ReactNode
+    children?: React.ReactNode,
+    className?: string,
 };

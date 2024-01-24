@@ -1,0 +1,11 @@
+.header {
+    width: 100%;
+    box-shadow: 0 0 2px 2px rgba(#333333, 0.15);
+    background-color: rgba(rgb(92, 205, 133), 0.5);
+}
+
+.header__container {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
