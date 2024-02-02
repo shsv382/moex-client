@@ -1,5 +1,7 @@
+import { Stock } from "../../pages/Index/Index.types";
+
 export interface ImoexTableProps {
-    data: any[],
+    data: Stock<boolean>[],
     methods?: any,
     removeFromPortfolio: (ticker: string) => void,
     addToPortfolio: (ticker: string) => void,

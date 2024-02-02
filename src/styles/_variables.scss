@@ -1,0 +1,259 @@
+@import "./colors";
+
+// color set
+$white: #ffffff;
+$dark: #0f1732;
+$yellow: #ffe301;
+$gray: lightgray;
+$blue-1: #0cbf74;
+$green-2: #94c344;
+$green-3: #31d892;
+$green-4: #38da96;
+$green-5: #099f60;
+$blue-1: #0c7dbf;
+$blue-1-73: #0c7dbf73;
+$blue-2: #0c60bf;
+$blue-3: #0c42bf;
+$blue-4: #120cbf;
+$blue-5: #450cbf;
+$blue-6: #223b4d;
+$blue-7: #2e5c7d;
+$red-1: #ee4444;
+$red-2: #e94242;
+$red-3: #8f0e0e;
+
+// gradients
+
+$gradient-1: linear-gradient(#38da96, #099f60);
+$gradient-2: linear-gradient(#25e0a5, #25c0cf);
+
+// fonts
+
+// $font-1: "Gilroy";
+$font-1: "AbitareSans";
+$font-2: "Inter";
+
+// bootstrap
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1140px,
+);
+
+// SAIRUS NEW DESIGN VARIABLES
+
+// COLORS
+// $primary_1: #000741;
+// $primary_2: #001a65;
+// $primary_3: #002273;
+
+// $secondary_1: #f728f7;
+// $secondary_2: #8700fd;
+// $secondary_3: #0066ff;
+// $secondary_4: #009ff1;
+
+// $primary_1_50: #00074177;
+// $primary_2_50: #001a6577;
+// $primary_3_50: #00227377;
+
+// $secondary_1_50: #df4bff77;
+// $secondary_2_50: #8700fd77;
+// $secondary_3_50: #0066ff77;
+
+// $gradient_1: linear-gradient(270deg, $secondary_1 17%, $secondary_3 52%, $secondary_2 88%);
+// $gradient_2: linear-gradient(270deg, $secondary_2 17%, $secondary_3 52%, $secondary_1 88%);
+
+// $success_color: #57c26d;
+// $error_color: #df526d;
+
+// $input: #292a6d;
+// $input_disabled: #151939;
+// $input_border: #3d4375;
+// $input_success_error: #000228;
+
+// // TEXT
+// $font_1: "AbitareSans";
+
+// $text_1: #ffffff;
+// $text_2: #a3a8ce;
+
+// $h1_size: 80px;
+// $h2_size: 50px;
+// $h3_size: 25px;
+// $h4_size: 17px;
+// $h5_size: 15px;
+// $h6_size: 13px;
+
+// $p1_size: 25px;
+// $p2_size: 17px;
+// $p3_size: 15px;
+
+// SAIRUS NEW DESIGN VARIABLES
+
+// COLORS
+$primary_1: #000741;
+$primary_2: #001a65;
+$primary_3: #002273;
+
+$secondary_1: #f728f7;
+$secondary_2: #8700fd;
+$secondary_3: #0066ff;
+
+$primary_1_50: #00074177;
+$primary_2_50: #001a6577;
+$primary_3_50: #00227377;
+
+$secondary_1_50: #f728f777;
+$secondary_2_50: #8700fd77;
+$secondary_3_50: #0066ff77;
+
+$gradient_1: linear-gradient(270deg, $secondary_1 17%, $secondary_3 52%, $secondary_2 88%);
+$gradient_2: linear-gradient(270deg, $secondary_2 17%, $secondary_3 52%, $secondary_1 88%);
+
+$success_color: #57c26d;
+$error_color: #df526d;
+
+$input: #292a6d;
+$input_disabled: #151939;
+$input_border: #3d4375;
+$input_success_error: #000228;
+
+// TEXT
+$font_1: "AbitareSans";
+
+$text_1: #ffffff;
+$text_2: #a3a8ce;
+
+$h1_size: 80px;
+$h2_size: 50px;
+$h3_size: 25px;
+$h4_size: 17px;
+$h5_size: 15px;
+$h6_size: 13px;
+
+$p1_size: 25px;
+$p2_size: 17px;
+$p3_size: 15px;
+
+h1 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 80px;
+    font-weight: 500;
+}
+
+h2 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 50px;
+    font-weight: 150;
+}
+
+h3 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 25px;
+    font-weight: 150;
+}
+
+h4 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 17px;
+    font-weight: 150;
+}
+
+h5 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 15px;
+    font-weight: 150;
+}
+
+h6 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 13px;
+    font-weight: 150;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+.text-m {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 25px;
+    font-weight: 150;
+}
+
+.text-s {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 17px;
+    font-weight: 150;
+}
+
+.text-xs {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 12px;
+    font-weight: 150;
+    color: $text_2;
+}
+
+h1 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 80px;
+    font-weight: 500;
+}
+
+h2 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 50px;
+    font-weight: 150;
+}
+
+h3 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 25px;
+    font-weight: 150;
+}
+
+h4 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 17px;
+    font-weight: 150;
+}
+
+h5 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 15px;
+    font-weight: 150;
+}
+
+h6 {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 13px;
+    font-weight: 150;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+.text-m {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 25px;
+    font-weight: 150;
+}
+
+.text-s {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 17px;
+    font-weight: 150;
+}
+
+.text-xs {
+    font-family: "AbitareSans" sans-serif;
+    font-size: 13px;
+    font-weight: 150;
+    color: $text_2;
+}

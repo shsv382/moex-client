@@ -1,0 +1,344 @@
+%icon {
+    display: inline-block;
+    mask-position: center center;
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+}
+
+.icon-add-user {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/add-user.svg);
+}
+
+.icon-arrow-right {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/arrow-right.svg);
+}
+
+.icon-arrow-right-simple {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/arrow-right-simple.svg);
+}
+
+.icon-brain-network {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/brain-network.svg);
+}
+
+.icon-brainstorm {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/brainstorm.svg);
+}
+
+.icon-cancel {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/cancel.svg);
+}
+
+.icon-cash-in {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/cash-in.svg);
+}
+
+.icon-cash-out {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/cash-out.svg);
+}
+
+.icon-clock-money {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/clock-money.svg);
+}
+
+.icon-close {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/close.svg);
+}
+
+.icon-email-success {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/email-success.svg);
+}
+
+.icon-error {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/error.svg);
+}
+
+.icon-exchange {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/exchange.svg);
+}
+
+.icon-exit {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/exit.svg);
+}
+
+.icon-facebook {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/facebook.svg);
+}
+
+.icon-gb {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/gb.svg);
+}
+
+.icon-grow-up {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/grow-up.svg);
+}
+
+.icon-growing-up-finger {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/growing-up-finger.svg);
+}
+
+.icon-instagram {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/instagram.svg);
+}
+
+.icon-lock {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/lock.svg);
+}
+
+.icon-logo {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/logo.svg);
+}
+
+.icon-mark-mini {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/mark-mini.svg);
+}
+
+.icon-mark {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/mark.svg);
+}
+
+.icon-menu {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/menu.svg);
+}
+
+.icon-messages {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/messages.svg);
+}
+
+.icon-messenger {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/messenger.svg);
+}
+
+.icon-message-circle {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/message-circle.svg);
+}
+
+.icon-minus-circle {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/minus-circle.svg);
+}
+
+.icon-money {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/money.svg);
+}
+
+.icon-plus-circle {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/plus-circle.svg);
+}
+
+.icon-position {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/position.svg);
+}
+
+.icon-refresh {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/refresh.svg);
+}
+
+.icon-safeguard {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/safeguard.svg);
+}
+
+.icon-segments {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/segments.svg);
+}
+
+.icon-send-message {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/send-message.svg);
+}
+
+.icon-stats-circle {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/stats-circle.svg);
+}
+
+.icon-stats-graph {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/stats-graph.svg);
+}
+
+.icon-stats-ok {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/stats-ok.svg);
+}
+
+.icon-stats {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/stats.svg);
+}
+
+.icon-success {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/success.svg);
+}
+
+.icon-target {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/target.svg);
+}
+
+.icon-telegram {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/telegram.svg);
+}
+
+.icon-transfer {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/transfer.svg);
+}
+
+.icon-triangle-right {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/triangle-right.svg);
+}
+
+.icon-twitter {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/twitter.svg);
+}
+
+.icon-unlock {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/unlock.svg);
+}
+
+.icon-user {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/user.svg);
+}
+
+.icon-wallet {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/wallet.svg);
+}
+
+.icon-wallet-mgm {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/wallet-mgm.svg);
+}
+
+.icon-youtube {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/youtube.svg);
+}
+
+.icon-workspace {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/workspace.svg);
+}
+
+.icon-deposits {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/deposits.svg);
+}
+
+.icon-history {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/history.svg);
+}
+
+.icon-team {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/team.svg);
+}
+
+.icon-settings {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/settings.svg);
+}
+
+.icon-marketing {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/marketing.svg);
+}
+
+.icon-p2p {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/p2p.svg);
+}
+
+.icon-promo {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/promo.svg);
+}
+
+.icon-instructions {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/instructions.svg);
+}
+
+.icon-team-transfer {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/team-transfer.svg);
+}
+
+.icon-team-chat {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/team-chat.svg);
+}
+
+.icon-team-email {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/team-email.svg);
+}
+
+.icon-i {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/i.svg);
+}
+
+.icon-search {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/search.svg);
+}
+
+.icon-total-top-ups {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/total-top-ups.svg);
+}
+
+.icon-delete {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/delete.svg);
+}
+
+.icon-copy {
+    @extend %icon;
+    mask-image: url(../assets/img/svg/copy.svg);
+}

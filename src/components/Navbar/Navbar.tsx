@@ -7,7 +7,7 @@ export const Navbar: FC<NavbarProps> = (props) => {
 	return (
 		<nav className={styles.navbar}>
 			<Link to={`/`}>Index</Link>
-			<Link to={`/hello`}>Hello</Link>
+			<Link to={`/roadmap`}>Roadmap</Link>
 		</nav>
 	);
 };

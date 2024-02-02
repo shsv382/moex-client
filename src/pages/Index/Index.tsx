@@ -5,22 +5,7 @@ import styles from './Index.module.scss';
 import { IMOEX_URL, STOCK_URL } from '../../constants';
 import { LocalStorage as LS } from '../../helpers/localStorage';
 import TextField from '@mui/material/TextField';
-
-interface Stock<T> {
-  indexid: string,
-  tradeDate: string,
-  ticker: string,
-  shortnames: string,
-  secid: string,
-  weight: number,
-  tradingsession: number,
-  marketPrice: number,
-  countTarget: number,
-  lotsTarget: number,
-  finalTarget: number,
-  lotSize: number,
-  includedToPortfolio?: T
-}
+import { Stock } from './Index.types';
 
 interface PortfolioStocks {
     [ticker: string]: number,
@@ -88,6 +73,10 @@ function Index() {
                 .then(stocks => {
                     setImoex(stocks) 
                     LS.setTemporaryItem("imoex", stocks, 1);
+                })
+                .catch(error => {
+                    setImoex(LS.getItem("imoex"));
+                    console.log(error.toString())
                 })
         }
     }, [])

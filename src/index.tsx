@@ -8,6 +8,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
+import { StockPage } from './pages/StockPage';
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,8 @@ const router = createBrowserRouter([
           element: <Index />,
         },
         {
-          path: "hello",
-          element: <div>Hello!</div>
+          path: "stocks/:ticker",
+          element: <StockPage />
         },
       ]
   },

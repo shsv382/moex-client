@@ -1,0 +1,56 @@
+@import './colors';
+
+h1 {
+  font-family: 'AbitareSans' sans-serif;
+  font-size: 80px;
+  font-weight: 500;
+}
+
+h2 {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 50px;
+    font-weight: 150;
+}
+
+h3 {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 25px;
+    font-weight: 150;
+}
+
+h4 {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 17px;
+    font-weight: 150;
+}
+
+h5 {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 15px;
+    font-weight: 150;
+}
+
+h6 {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 13px;
+    font-weight: 150;
+}
+
+.text-m {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 25px;
+    font-weight: 150;
+}
+
+.text-s {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 17px;
+    font-weight: 150;
+}
+
+.text-xs {
+    font-family: 'AbitareSans' sans-serif;
+    font-size: 13px;
+    font-weight: 150;
+    color: $text_2;
+}

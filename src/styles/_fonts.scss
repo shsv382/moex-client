@@ -1,0 +1,10 @@
+$font-sizes: 50 100 150 200 250 300 350 400 500 600 700 800 900 1000;
+
+@each $font-size in $font-sizes {
+  @font-face {
+    font-family: 'AbitareSans';
+    src: url('../fonts/AbitareSans-' + $font-size + '.ttf') format('truetype');
+    font-weight: $font-size;
+    font-style: normal;
+  }
+}
