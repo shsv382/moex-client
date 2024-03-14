@@ -54,7 +54,7 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 						<Checkbox checked={stock.includedToPortfolio} onChange={handleCheckboxToggle(stock)} />
 					</TableCell>
 					<TableCell component="th" scope="row">
-						<Link to={`/stocks/${stock.ticker}`}>
+						<Link to={`https://smart-lab.ru/q/${stock.ticker}/f/y/`} target='_blank'>
 							{stock.ticker}
 						</Link>
 					</TableCell>
