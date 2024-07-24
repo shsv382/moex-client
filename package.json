@@ -2,6 +2,7 @@
   "name": "moex-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://shsv382.github.io/moex-client",
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -26,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@types/redux-logger": "^3.0.13"
+    "@types/redux-logger": "^3.0.13",
+    "gh-pages": "^6.1.1"
   }
 }
