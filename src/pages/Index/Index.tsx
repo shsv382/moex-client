@@ -138,7 +138,15 @@ function Index() {
                     } %</div>
                 </div>
                 <ImoexTable data={
-                    myMoex.sort((s1, s2) => s2.weight - s1.weight).map(stock => {
+                    myMoex.sort((a, b) => {
+                        if (a.ticker < b.ticker) {
+                            return -1;
+                        }
+                        if (a.ticker > b.ticker) {
+                            return 1;
+                        }
+                        return 0;
+                    }).map(stock => {
                         stock.countTarget = portfolio[stock.ticker] ? Math.floor((amount / portfolio.total * stock.weight) / stock.marketPrice) : 0;
                         stock.lotsTarget = Math.floor(stock.countTarget / stock.lotSize)
                         stock.finalTarget = stock.lotsTarget * stock.lotSize
