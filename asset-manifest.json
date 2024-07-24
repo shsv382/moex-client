@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/moex-client/static/css/main.0fbaf34f.css",
+    "main.js": "/moex-client/static/js/main.18ebb7b9.js",
+    "static/js/787.096cc1b6.chunk.js": "/moex-client/static/js/787.096cc1b6.chunk.js",
+    "index.html": "/moex-client/index.html",
+    "main.0fbaf34f.css.map": "/moex-client/static/css/main.0fbaf34f.css.map",
+    "main.18ebb7b9.js.map": "/moex-client/static/js/main.18ebb7b9.js.map",
+    "787.096cc1b6.chunk.js.map": "/moex-client/static/js/787.096cc1b6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0fbaf34f.css",
+    "static/js/main.18ebb7b9.js"
+  ]
+}
