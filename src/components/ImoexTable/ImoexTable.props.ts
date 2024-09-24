@@ -5,4 +5,5 @@ export interface ImoexTableProps {
     methods?: any,
     removeFromPortfolio: (ticker: string) => void,
     addToPortfolio: (ticker: string) => void,
+    makeNote: (ticker: string, text: string) => void,
 };

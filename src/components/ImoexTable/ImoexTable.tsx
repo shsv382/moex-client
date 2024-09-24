@@ -14,12 +14,13 @@ import Checkbox from '@mui/material/Checkbox';
 import { Stock } from '../../pages/Index/Index.types';
 import { Link } from 'react-router-dom';
 
-export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFromPortfolio }) => {
+export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFromPortfolio, makeNote }) => {
 	const handleCheckboxToggle = (stock: Stock<boolean>) => () => {
 		stock.includedToPortfolio ?
 		removeFromPortfolio(stock.ticker) :
 		addToPortfolio(stock.ticker)
 	}
+
 	return (
 		<TableContainer component={Paper}>
 		  <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -32,6 +33,7 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 				  Таргет (факт)
 				  <PopupBody className={styles.popup}>Сколько акций/лотов должно быть в портфеле</PopupBody>
 				</TableCell>
+				<TableCell align="center">Факт</TableCell>
 				<TableCell align="right">Вес в индексе</TableCell>
 				<TableCell align="right">Цена</TableCell>
 				<TableCell align="right">Объем лота</TableCell>
@@ -60,6 +62,15 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 					</TableCell>
 					<TableCell>{stock.shortnames}</TableCell>
 					<TableCell align="center">{stock.finalTarget} шт. / {stock.lotsTarget} лт.</TableCell>
+					<TableCell align="center">
+						<input 
+						type="text" 
+						name="" 
+						id="" 
+						className={styles.table__note}
+						onChange={(e) => makeNote(stock.ticker, e.target.value)}
+						/>
+					</TableCell>
 					<TableCell align="right">{stock.weight} %</TableCell>
 					<TableCell align="right">{stock.marketPrice} &#x20bd;</TableCell>
 					<TableCell align="right">{stock.lotSize} шт.</TableCell>

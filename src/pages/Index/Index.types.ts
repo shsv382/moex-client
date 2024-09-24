@@ -11,5 +11,6 @@ export interface Stock<T> {
     lotsTarget: number,
     finalTarget: number,
     lotSize: number,
-    includedToPortfolio?: T
+    includedToPortfolio?: T,
+    note?: string
   }

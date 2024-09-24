@@ -125,6 +125,10 @@ function Index() {
         setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, includedToPortfolio: false} : stock))
     }
 
+    const makeNote = (ticker: string, text: string): void => {
+        setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, note: text} : stock))
+    }
+
     const setCapitalAmount = (e: React.ChangeEvent<HTMLInputElement>) => setAmount(Number(e.target.value))
 
     return (
@@ -154,7 +158,8 @@ function Index() {
                         return stock
                     })
                 } removeFromPortfolio={removeFromPortfolio} 
-                addToPortfolio={addToPortfolio} />
+                addToPortfolio={addToPortfolio}
+                makeNote={makeNote} />
             </Container>
         </div>
     );
