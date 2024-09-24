@@ -42,7 +42,31 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 			  </TableRow>
 			</TableHead>
 			<TableBody>
-			  {data.map((stock: any) => (
+			  {data.filter(stock => stock.includedToPortfolio).map((stock: any) => (
+				
+				<TableRow
+					key={stock.ticker}
+					className={stock.includedToPortfolio && styles.table__portfolio}
+					sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+				>
+				
+					<TableCell component="th" scope="row">
+						<Checkbox checked={stock.includedToPortfolio} onChange={handleCheckboxToggle(stock)} />
+					</TableCell>
+					<TableCell component="th" scope="row">
+						<Link to={`https://smart-lab.ru/q/${stock.ticker}/f/y/`} target='_blank'>
+							{stock.ticker}
+						</Link>
+					</TableCell>
+					<TableCell>{stock.shortnames}</TableCell>
+					<TableCell align="center">{stock.finalTarget} шт. / {stock.lotsTarget} лт.</TableCell>
+					<TableCell align="right">{stock.weight} %</TableCell>
+					<TableCell align="right">{stock.marketPrice} &#x20bd;</TableCell>
+					<TableCell align="right">{stock.lotSize} шт.</TableCell>
+					<TableCell align="right">{stock.countTarget} шт.</TableCell>
+				</TableRow>
+			  ))}
+			  	{data.filter(stock => !stock.includedToPortfolio).map((stock: any) => (
 				
 				<TableRow
 					key={stock.ticker}
