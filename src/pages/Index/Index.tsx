@@ -15,7 +15,7 @@ interface PortfolioStocks {
 function Index() {
     const [imoex, setImoex] = useState<Stock<null>[]>([]);
     const [myMoex, setMyMoex] = useState<Stock<boolean>[]>([]);
-    const [amount, setAmount] = useState<number>(250000);
+    const [amount, setAmount] = useState<number>(LS.getItem("amount") || 250000);
     const [portfolio, setPortfolio] = useState<PortfolioStocks>({total: 0});
 
     function createData(
@@ -43,6 +43,10 @@ function Index() {
     }
 
     useEffect(() => {
+        const amount_cached = LS.getItem("amount")
+        if (amount_cached) {
+            setAmount(amount_cached)
+        }
         const imoex_cached = LS.getTemporaryItem("imoex");
         async function fetchIMOEXData() {
             const response = await fetch(IMOEX_URL());
@@ -129,7 +133,10 @@ function Index() {
         setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, note: text} : stock))
     }
 
-    const setCapitalAmount = (e: React.ChangeEvent<HTMLInputElement>) => setAmount(Number(e.target.value))
+    const setCapitalAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+        LS.setItem("amount", Number(e.target.value))
+        setAmount(Number(e.target.value))
+    }
 
     return (
         <div className={styles.app}>
