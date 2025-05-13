@@ -5,6 +5,7 @@ import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
+import { Input } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -63,8 +64,8 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 					<TableCell>{stock.shortnames}</TableCell>
 					<TableCell align="center">{stock.finalTarget} шт. / {stock.lotsTarget} лт.</TableCell>
 					<TableCell align="center">
-						<input 
-						type="text" 
+						<Input 
+						type="number" 
 						name="" 
 						id="" 
 						className={styles.table__note}
@@ -95,6 +96,15 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 					</TableCell>
 					<TableCell>{stock.shortnames}</TableCell>
 					<TableCell align="center">{stock.finalTarget} шт. / {stock.lotsTarget} лт.</TableCell>
+					<TableCell align="center">
+						<Input 
+						type="number" 
+						name="" 
+						id="" 
+						className={styles.table__note}
+						onChange={(e) => makeNote(stock.ticker, e.target.value)}
+						/>
+					</TableCell>
 					<TableCell align="right">{stock.weight} %</TableCell>
 					<TableCell align="right">{stock.marketPrice} &#x20bd;</TableCell>
 					<TableCell align="right">{stock.lotSize} шт.</TableCell>
