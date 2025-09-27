@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ImoexTable } from '../../components/ImoexTable/ImoexTable';
 import { Container } from '../../components/Container';
 import styles from './Index.module.scss';
@@ -15,7 +15,7 @@ interface PortfolioStocks {
 function Index() {
     const [imoex, setImoex] = useState<Stock<null>[]>([]);
     const [myMoex, setMyMoex] = useState<Stock<boolean>[]>([]);
-    const [amount, setAmount] = useState<number>(LS.getItem("amount") || 250000);
+    const [amount, setAmount] = useState<number>(LS.getItem("amount") || 370000);
     const [portfolio, setPortfolio] = useState<PortfolioStocks>({total: 0});
 
     function createData(
@@ -47,7 +47,7 @@ function Index() {
         if (amount_cached) {
             setAmount(amount_cached)
         }
-        const imoex_cached = LS.getTemporaryItem("imoex");
+        // const imoex_cached = LS.getTemporaryItem("imoex");
         async function fetchIMOEXData() {
             const response = await fetch(IMOEX_URL());
             const data = await response.json();
@@ -70,19 +70,15 @@ function Index() {
             return stocks;
         }
         
-        if (imoex_cached) {
-            setImoex(imoex_cached);
-        } else {
-            fetchIMOEXData()
-                .then(stocks => {
-                    setImoex(stocks) 
-                    LS.setTemporaryItem("imoex", stocks, 1);
-                })
-                .catch(error => {
-                    setImoex(LS.getItem("imoex"));
-                    console.log(error.toString())
-                })
-        }
+        fetchIMOEXData()
+            .then(stocks => {
+                setImoex(stocks) 
+                LS.setTemporaryItem("imoex", stocks, 1);
+            })
+            .catch(error => {
+                setImoex(LS.getItem("imoex"));
+                console.error(error.toString())
+            })
     }, [])
 
     useEffect(() => {
@@ -90,7 +86,7 @@ function Index() {
         let myMoex: Stock<boolean>[] = [];
         if (!portfolio || Object.keys(portfolio).length <= 1) {
             imoex.forEach(stock => {
-                portfolio[stock.ticker] = stock.weight;
+                portfolio[stock.ticker] = {weight: stock.weight, count: 1};
                 portfolio.total += stock.weight;
                 myMoex.push({...stock, includedToPortfolio: true});
             })
@@ -133,33 +129,72 @@ function Index() {
         setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, note: text} : stock))
     }
 
+    const [capitalSize, setCapitalSize] = useState(amount)
+    const [stocksP, setStocksP] = useState(75)
+    const [bondsP, setBondsP] = useState(8)
+    const [fundsP, setFundsP] = useState(12)
+    const [cacheP, setCacheP] = useState(5)
+
+    const setStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStocksP(Number(e.target.value))
+    }
+    const setBonds = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setBondsP(Number(e.target.value))
+    }
+    const setFunds = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFundsP(Number(e.target.value))
+    }
+    const setCache = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCacheP(Number(e.target.value))
+    }
+
     const setCapitalAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
         LS.setItem("amount", Number(e.target.value))
         setAmount(Number(e.target.value))
     }
+
+    const [search, setSearch] = useState<string>('')
+
+    const setSearchField = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+    }
+
+    useEffect(() => {
+        let cap = amount * (stocksP + cacheP) / (stocksP + bondsP + fundsP + cacheP)
+        setCapitalSize(cap)
+    }, [amount, stocksP, bondsP, fundsP, cacheP])
 
     return (
         <div className={styles.app}>
             <Container>
                 <div className={styles.service}>
                     <TextField id="capitalSize" label="Размер капитала" variant="standard" type="number" onChange={setCapitalAmount} defaultValue={amount} />
+                    <TextField id="stocks" label="Акции, %" variant="standard" type="number" onChange={setStocks} defaultValue={75} />
+                    <TextField id="bonds" label="Облигации, %" variant="standard" type="number" onChange={setBonds} defaultValue={8} />
+                    <TextField id="funds" label="Фонды, %" variant="standard" type="number" onChange={setFunds} defaultValue={12} />
+                    <TextField id="cache" label="Кэш, %" variant="standard" type="number" onChange={setCache} defaultValue={5} />
+                </div>
+                <div className={styles.service}>
+                    <TextField id="search" label="Поиск" variant="standard" type="text" onChange={setSearchField} defaultValue={search} />
                     <div>Total portfolio: {Math.round(portfolio.total * 100)/100} %</div>
                     <div>Total index: {
                         Math.round(imoex.reduce((total, item) => total + item.weight, 0) * 100)/100
                     } %</div>
+                    <div>Распределяемый капитал: {Math.round(capitalSize)}</div>
                 </div>
                 <ImoexTable data={
-                    myMoex.sort((a, b) => {
-                            if (a.ticker < b.ticker) {
-                                return -1;
-                            }
-                            if (a.ticker > b.ticker) {
+                    myMoex.filter(stock => (stock.ticker.toLowerCase().includes(search.toLowerCase()) || stock.shortnames.toLowerCase().includes(search.toLowerCase())))
+                    .sort((a, b) => {
+                            if (a.weight < b.weight) {
                                 return 1;
+                            }
+                            if (a.weight > b.weight) {
+                                return -1;
                             }
                             return 0;
                     })
                     .map(stock => {
-                        stock.countTarget = portfolio[stock.ticker] ? Math.floor((amount / portfolio.total * stock.weight) / stock.marketPrice) : 0;
+                        stock.countTarget = portfolio[stock.ticker] ? Math.floor((capitalSize / portfolio.total * stock.weight) / stock.marketPrice) : 0;
                         stock.lotsTarget = Math.floor(stock.countTarget / stock.lotSize)
                         stock.finalTarget = stock.lotsTarget * stock.lotSize
                         return stock

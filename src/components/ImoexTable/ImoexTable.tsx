@@ -23,7 +23,7 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 	}
 
 	return (
-		<TableContainer component={Paper}>
+		<TableContainer className={styles.table} component={Paper}>
 		  <Table sx={{ minWidth: 650 }} aria-label="simple table">
 			<TableHead className={styles.table__head}>
 			  <TableRow>
