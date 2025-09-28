@@ -7,16 +7,26 @@ import { LocalStorage as LS } from '../../helpers/localStorage';
 import TextField from '@mui/material/TextField';
 import { Stock } from './Index.types';
 
+type PortfolioElement = {weight: number, count?: number}
+
 interface PortfolioStocks {
-    [ticker: string]: number,
-    total: number
+    total: number,
+    stocks: {
+        [ticker: string]: PortfolioElement,
+    }
 }
 
 function Index() {
     const [imoex, setImoex] = useState<Stock<null>[]>([]);
     const [myMoex, setMyMoex] = useState<Stock<boolean>[]>([]);
     const [amount, setAmount] = useState<number>(LS.getItem("amount") || 370000);
-    const [portfolio, setPortfolio] = useState<PortfolioStocks>({total: 0});
+    const [portfolio, setPortfolio] = useState<PortfolioStocks>({total: 0, stocks: {}});
+
+    const [capitalSize, setCapitalSize] = useState(amount)
+    const [stocksP, setStocksP] = useState<number>(LS.getItem("stocks") || 75)
+    const [bondsP, setBondsP] = useState(LS.getItem("bonds") || 8)
+    const [fundsP, setFundsP] = useState(LS.getItem("funds") || 12)
+    const [cacheP, setCacheP] = useState(LS.getItem("cache") || 5)
 
     function createData(
         indexid: string,
@@ -81,18 +91,20 @@ function Index() {
             })
     }, [])
 
+
+
     useEffect(() => {
-        let portfolio = LS.getItem("portfolio") || {total: 0};
+        let portfolio = LS.getItem("portfolio") || {total: 0, stocks: {}};
         let myMoex: Stock<boolean>[] = [];
         if (!portfolio || Object.keys(portfolio).length <= 1) {
             imoex.forEach(stock => {
-                portfolio[stock.ticker] = {weight: stock.weight, count: 1};
+                portfolio.stocks[stock.ticker] = {weight: stock.weight, count: 1};
                 portfolio.total += stock.weight;
                 myMoex.push({...stock, includedToPortfolio: true});
             })
         } else {
             imoex.forEach(stock => {
-                if (portfolio[stock.ticker]) {
+                if (portfolio.stocks[stock.ticker]) {
                     myMoex.push({...stock, includedToPortfolio: true});
                 } else {
                     myMoex.push({...stock, includedToPortfolio: false});
@@ -108,7 +120,7 @@ function Index() {
         const _portfolio = { ...portfolio };
         const elem = imoex.find(item => item.ticker === ticker);
         if (elem) {
-            _portfolio[ticker] = elem.weight;
+            _portfolio.stocks[ticker] = {weight: elem.weight};
             _portfolio.total += elem.weight;
         }
         setPortfolio(_portfolio);
@@ -118,8 +130,8 @@ function Index() {
 
     const removeFromPortfolio = (ticker: string): void => {
         const _portfolio = { ...portfolio };
-        _portfolio.total -= _portfolio[ticker];
-        delete _portfolio[ticker];
+        _portfolio.total -= _portfolio.stocks[ticker].weight;
+        delete _portfolio.stocks[ticker];
         setPortfolio(_portfolio);
         LS.setItem("portfolio", _portfolio)
         setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, includedToPortfolio: false} : stock))
@@ -129,24 +141,29 @@ function Index() {
         setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, note: text} : stock))
     }
 
-    const [capitalSize, setCapitalSize] = useState(amount)
-    const [stocksP, setStocksP] = useState(75)
-    const [bondsP, setBondsP] = useState(8)
-    const [fundsP, setFundsP] = useState(12)
-    const [cacheP, setCacheP] = useState(5)
-
     const setStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStocksP(Number(e.target.value))
+        LS.setItem("stocks", Number(e.target.value))
     }
     const setBonds = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBondsP(Number(e.target.value))
+        LS.setItem("bonds", Number(e.target.value))
     }
     const setFunds = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFundsP(Number(e.target.value))
+        LS.setItem("funds", Number(e.target.value))
     }
     const setCache = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCacheP(Number(e.target.value))
+        LS.setItem("cache", Number(e.target.value))
     }
+
+    useEffect(() => {
+        setStocksP(LS.getItem("stocks") || 75)
+        setBondsP(LS.getItem("bonds") || 8)
+        setFundsP(LS.getItem("funds") || 12)
+        setCacheP(LS.getItem("cache") || 5)
+    }, [])
 
     const setCapitalAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
         LS.setItem("amount", Number(e.target.value))
@@ -169,10 +186,10 @@ function Index() {
             <Container>
                 <div className={styles.service}>
                     <TextField id="capitalSize" label="Размер капитала" variant="standard" type="number" onChange={setCapitalAmount} defaultValue={amount} />
-                    <TextField id="stocks" label="Акции, %" variant="standard" type="number" onChange={setStocks} defaultValue={75} />
-                    <TextField id="bonds" label="Облигации, %" variant="standard" type="number" onChange={setBonds} defaultValue={8} />
-                    <TextField id="funds" label="Фонды, %" variant="standard" type="number" onChange={setFunds} defaultValue={12} />
-                    <TextField id="cache" label="Кэш, %" variant="standard" type="number" onChange={setCache} defaultValue={5} />
+                    <TextField id="stocks" label="Акции, %" variant="standard" type="number" onChange={setStocks} defaultValue={stocksP} />
+                    <TextField id="bonds" label="Облигации, %" variant="standard" type="number" onChange={setBonds} defaultValue={bondsP} />
+                    <TextField id="funds" label="Фонды, %" variant="standard" type="number" onChange={setFunds} defaultValue={fundsP} />
+                    <TextField id="cache" label="Кэш, %" variant="standard" type="number" onChange={setCache} defaultValue={cacheP} />
                 </div>
                 <div className={styles.service}>
                     <TextField id="search" label="Поиск" variant="standard" type="text" onChange={setSearchField} defaultValue={search} />
@@ -194,12 +211,13 @@ function Index() {
                             return 0;
                     })
                     .map(stock => {
-                        stock.countTarget = portfolio[stock.ticker] ? Math.floor((capitalSize / portfolio.total * stock.weight) / stock.marketPrice) : 0;
+                        stock.countTarget = portfolio.stocks[stock.ticker] ? Math.floor((capitalSize / portfolio.total * stock.weight) / stock.marketPrice) : 0;
                         stock.lotsTarget = Math.floor(stock.countTarget / stock.lotSize)
                         stock.finalTarget = stock.lotsTarget * stock.lotSize
                         return stock
                     })
-                } removeFromPortfolio={removeFromPortfolio} 
+                } 
+                removeFromPortfolio={removeFromPortfolio} 
                 addToPortfolio={addToPortfolio}
                 makeNote={makeNote} />
             </Container>
