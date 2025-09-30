@@ -138,7 +138,10 @@ function Index() {
     }
 
     const makeNote = (ticker: string, text: string): void => {
-        setMyMoex(myMoex.map(stock => stock.ticker === ticker ? {...stock, note: text} : stock))
+        let _portfolio = { ...portfolio }
+        _portfolio.stocks[ticker].count = Number(text)
+        setPortfolio(_portfolio)
+        LS.setItem("portfolio", _portfolio)
     }
 
     const setStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -214,6 +217,7 @@ function Index() {
                         stock.countTarget = portfolio.stocks[stock.ticker] ? Math.floor((capitalSize / portfolio.total * stock.weight) / stock.marketPrice) : 0;
                         stock.lotsTarget = Math.floor(stock.countTarget / stock.lotSize)
                         stock.finalTarget = stock.lotsTarget * stock.lotSize
+                        stock.count = portfolio.stocks[stock.ticker]?.count || 0
                         return stock
                     })
                 } 

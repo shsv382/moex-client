@@ -66,7 +66,8 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 					<TableCell align="center">
 						<Input 
 						type="number" 
-						name="" 
+						name={stock.ticker} 
+						value={stock?.count?.toString()}
 						id="" 
 						className={styles.table__note}
 						onChange={(e) => makeNote(stock.ticker, e.target.value)}
@@ -102,7 +103,7 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 						name="" 
 						id="" 
 						className={styles.table__note}
-						onChange={(e) => makeNote(stock.ticker, e.target.value)}
+						disabled
 						/>
 					</TableCell>
 					<TableCell align="right">{stock.weight} %</TableCell>
