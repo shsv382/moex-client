@@ -62,7 +62,13 @@ export const ImoexTable: FC<ImoexTableProps> = ({ data, addToPortfolio, removeFr
 						</Link>
 					</TableCell>
 					<TableCell>{stock.shortnames}</TableCell>
-					<TableCell align="center">{stock.finalTarget} шт. / {stock.lotsTarget} лт.</TableCell>
+					<TableCell align="center">{stock.finalTarget} шт. / {stock.lotsTarget} лт.  
+						{(stock.lotsToBuy > 0) && 
+						<strong className={styles.lotsToBuy}>
+							&nbsp;(+{stock.lotsToBuy})
+						</strong>
+						}
+					</TableCell>
 					<TableCell align="center">
 						<Input 
 						type="number" 

@@ -215,7 +215,9 @@ function Index() {
                     })
                     .map(stock => {
                         stock.countTarget = portfolio.stocks[stock.ticker] ? Math.floor((capitalSize / portfolio.total * stock.weight) / stock.marketPrice) : 0;
+                        stock.countToBuy = portfolio.stocks[stock.ticker] ? Math.floor(((cacheP * amount / 100) / portfolio.total * stock.weight) / stock.marketPrice) : 0
                         stock.lotsTarget = Math.floor(stock.countTarget / stock.lotSize)
+                        stock.lotsToBuy = Math.floor(stock.countToBuy / stock.lotSize)
                         stock.finalTarget = stock.lotsTarget * stock.lotSize
                         stock.count = portfolio.stocks[stock.ticker]?.count || 0
                         return stock

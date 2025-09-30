@@ -13,5 +13,7 @@ export interface Stock<T> {
     lotSize: number,
     includedToPortfolio?: T,
     note?: string,
-    count?: number
+    count?: number,
+    countToBuy: number,
+    lotsToBuy: number
   }
